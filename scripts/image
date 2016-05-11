@@ -42,7 +42,7 @@ if [ "$LIBREELEC_VERSION" = "devel" ]; then
   fi
   GIT_ABBREV=$(git log -1 --pretty=format:%h)
   DEVEL_VERSION=$LIBREELEC_VERSION
-  LIBREELEC_VERSION=$LIBREELEC_VERSION-$BUILD_DATE-r$GIT_BUILD-g$GIT_ABBREV
+  LIBREELEC_VERSION=$LIBREELEC_VERSION-$GIT_ABBREV
 fi
 
 # Get origin url, fix git:// and git@github.com: urls if necessary
@@ -390,6 +390,10 @@ fi
           SYSTEM_PART_START="$SYSTEM_PART_START" \
           $SCRIPTS/mkimage
       fi
+
+    # clean up target directory
+      rm -rf $TARGET_IMG/$IMAGE_NAME.kernel
+      rm -rf $TARGET_IMG/$IMAGE_NAME.system
 
     # create WeTek Play (Amlogic) ZIP update and auto-install packages if requested
       if [ "$1" = "amlpkg" ]; then
