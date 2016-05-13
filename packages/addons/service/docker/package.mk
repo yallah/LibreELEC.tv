@@ -86,7 +86,25 @@ make_target() {
 }
 
 makeinstall_target() {
-  :
+  mkdir -p $INSTALL/etc
+  mkdir -p $INSTALL/usr/sbin
+  mkdir -p $INSTALL/usr/config
+  mkdir -p $INSTALL/usr/share/services
+  ln -sf /storage/.config/docker $INSTALL/etc/docker
+  cp bin/docker $INSTALL/usr/sbin
+  cp -R $PKG_DIR/config/* $INSTALL/usr/config
+
+  # containerd
+  cp -P $(get_build_dir containerd)/bin/containerd $INSTALL/usr/sbin/docker-containerd
+  cp -P $(get_build_dir containerd)/bin/containerd-shim $INSTALL/usr/sbin/docker-containerd-shim
+  cp -P $(get_build_dir containerd)/bin/ctr $INSTALL/usr/sbin/docker-containerd-ctr
+
+  # runc
+  cp -P $(get_build_dir runc)/bin/runc $INSTALL/usr/sbin/docker-runc
+}
+
+post_install() {
+  enable_service docker.service
 }
 
 addon() {
