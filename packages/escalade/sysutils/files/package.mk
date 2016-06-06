@@ -39,10 +39,10 @@ makeinstall_target() {
   mkdir -p $INSTALL
   case $PROJECT in
     "Generic")
-      cp -PRv $ROOT/files/Generic/* $INSTALL/
+      test -d $ROOT/files/$PROJECT && cp -PRv $ROOT/files/$PROJECT/* $INSTALL/
     ;;
     "RPi*")
-      cp -PRv $ROOT/files/RPi/* $INSTALL/
+      test -d $ROOT/files/$PROJECT && cp -PRv $ROOT/files/$PROJECT/* $INSTALL/
     ;;
   esac
 }
