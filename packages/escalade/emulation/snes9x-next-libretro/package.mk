@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="snes9x-next-libretro"
-PKG_VERSION="ad1ef19"
+PKG_VERSION="d694d32"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="Non-commercial"
