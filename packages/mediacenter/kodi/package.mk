@@ -17,12 +17,10 @@
 ################################################################################
 
 PKG_NAME="kodi"
-PKG_VERSION="17.0-alpha2-e31bee7"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
-PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain kodi:host xmlstarlet:host Python zlib systemd pciutils lzo pcre swig:host libass curl rtmpdump fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio taglib libxml2 libxslt yajl sqlite ffmpeg crossguid giflib libdvdnav"
 PKG_DEPENDS_HOST="lzo:host libpng:host libjpeg-turbo:host giflib:host"
 PKG_PRIORITY="optional"
@@ -32,6 +30,22 @@ PKG_LONGDESC="Kodi Media Center (which was formerly named Xbox Media Center or X
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+
+case "$PROJECT" in
+  RPi|RPi2)
+    PKG_VERSION="5ae4955"
+    PKG_URL="https://github.com/popcornmix/xbmc/archive/newclock5/$PKG_VERSION.tar.gz"
+  ;;
+  *)
+    PKG_VERSION="e31bee7"
+    PKG_URL="https://github.com/xbmc/xbmc/archive/$PKG_VERSION.tar.gz"
+  ;;
+esac
+
+unpack() {
+  tar -zxf $SOURCES/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz -C $BUILD
+  mv $BUILD/xbmc-* $BUILD/$PKG_NAME-$PKG_VERSION
+}
 
 # configure GPU drivers and dependencies:
   get_graphicdrivers
