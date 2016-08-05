@@ -13,7 +13,7 @@ diff --git a/Makefile.am b/Makefile.am
 index 36c269e..a2c2870 100644
 --- a/Makefile.am
 +++ b/Makefile.am
-@@ -233,8 +233,8 @@ define move-to-rootlibdir
+@@ -254,8 +254,8 @@
  	if test "$(libdir)" != "$(rootlibdir)"; then \
  		$(MKDIR_P) $(DESTDIR)$(rootlibdir) && \
  		so_img_name=$$(readlink $(DESTDIR)$(libdir)/$$libname) && \
@@ -24,7 +24,7 @@ index 36c269e..a2c2870 100644
  		mv $(DESTDIR)$(libdir)/$$libname.* $(DESTDIR)$(rootlibdir); \
  	fi
  endef
-@@ -297,9 +297,9 @@ install-aliases-hook:
+@@ -312,9 +312,9 @@
  	set -- $(SYSTEM_UNIT_ALIASES) && \
  		dir=$(systemunitdir) && $(install-aliases)
  	set -- $(USER_UNIT_ALIASES) && \
@@ -36,15 +36,15 @@ index 36c269e..a2c2870 100644
  
  define install-aliases
  	while [ -n "$$1" ]; do \
-@@ -2536,7 +2536,7 @@ systemd_dbus1_generator_LDADD = \
- dbus1-generator-install-hook:
- 	$(AM_V_at)$(MKDIR_P) $(DESTDIR)$(usergeneratordir)
- 	$(AM_V_RM)rm -f $(DESTDIR)$(usergeneratordir)/systemd-dbus1-generator
--	$(AM_V_LN)$(LN_S) --relative -f $(DESTDIR)$(systemgeneratordir)/systemd-dbus1-generator $(DESTDIR)$(usergeneratordir)/systemd-dbus1-generator
-+	$(AM_V_LN)$(LN_S) -f $(systemgeneratordir)/systemd-dbus1-generator $(DESTDIR)$(usergeneratordir)/systemd-dbus1-generator
- 
- dbus1-generator-uninstall-hook:
- 	rm -f $(DESTDIR)$(usergeneratordir)/systemd-dbus1-generator
+@@ -329,7 +329,7 @@
+ 	while [ -n "$$1" ]; do \
+ 		$(MKDIR_P) `dirname $(DESTDIR)$$dir/$$2` && \
+ 		rm -f $(DESTDIR)$$dir/$$2 && \
+-		$(LN_S) --relative $(DESTDIR)$$1 $(DESTDIR)$$dir/$$2 && \
++		$(LN_S) $(DESTDIR)$$1 $(DESTDIR)$$dir/$$2 && \
+ 		shift 2 || exit $$?; \
+ 	done
+ endef
 diff --git a/configure.ac b/configure.ac
 index 97a29d6..c9d3305 100644
 --- a/configure.ac
